@@ -9,17 +9,20 @@ const NavBar = () => {
 
   const currencyHandler = (event) => {
     switch (event.target.value) {
-      case "USD": {
+      case "USD":
         setCurrency({ name: "USD", symbol: "$" });
-      }
-      case "CAD": {
+        break; // Add break to prevent fall-through
+      case "CAD":
         setCurrency({ name: "CAD", symbol: "$" });
-      }
-      case "EUR": {
-        setCurrency({ name: "EUR", symbol: "$" });
-      }
+        break; // Add break to prevent fall-through
+      case "EUR":
+        setCurrency({ name: "EUR", symbol: "€" });
+        break; // Add break to prevent fall-through
+      default:
+        setCurrency({ name: "USD", symbol: "$" });
     }
   };
+
   return (
     <div className="NavBar">
       <img src={logo} className="logo" alt="" />
