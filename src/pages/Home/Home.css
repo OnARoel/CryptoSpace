@@ -96,3 +96,68 @@
     color: #ff4646;
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .hero {
+        margin: 40px auto;
+    }
+
+    .market-cap {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        width: 100%;
+    }
+
+    .hero form {
+        width: 100%;
+    }
+
+    .crypto-table {
+        max-width: 100%;
+    }
+
+    .table-layout {
+        grid-template-columns: 1fr 2fr 1fr 1fr 1.5fr;
+    }
+
+    .table-layout div {
+        gap: 5px;
+    }
+
+    .table-layout div img {
+        width: 25px;
+    }
+}
+
+@media (max-width: 500px) {
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .hero form {
+        font-size: 14px;
+    }
+
+    .crypto-table {
+        padding: 10px;
+    }
+
+    .table-layout {
+        padding: 10px;
+    }
+
+    .table-layout div img {
+        width: 20px;
+        padding-right: 5px;
+    }
+}
