@@ -65,7 +65,7 @@
     padding: 20px 5%;
   }
   .NavBar button {
-    padding: 10px 20px;
+    padding: 5px 5px;
     gap: 8px;
     font-size: 14px;
   }
@@ -80,5 +80,6 @@
   }
   .NavBar button img {
     width: 8px;
+    height: 8px;
   }
 }
