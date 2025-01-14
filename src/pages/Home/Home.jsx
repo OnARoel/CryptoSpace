@@ -3,7 +3,7 @@ import "./Home.css";
 import { CoinContext } from "../../context/CoinContext";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Home = ({row}) => {
   const { allCoin, currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState(allCoin); // Initialize with all coins
   const [input, setInput] = useState("");
@@ -36,17 +36,11 @@ const Home = () => {
         <form onSubmit={(e) => e.preventDefault()}>
           <input
             onChange={inputHandler}
-            // list="crypto"
             value={input}
             required
             type="text"
             placeholder="Search Crypto.."
           />
-          {/* <datalist id="crypto">
-            {allCoin.map((item, index) => {
-              return <option key={index} value={item.name} />;
-            })}
-          </datalist> */}
           <button type="submit">Search</button>
         </form>
       </div>

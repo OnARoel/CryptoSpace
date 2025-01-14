@@ -5,10 +5,9 @@ import icon from "../../assets/arrow.svg";
 import { CoinContext } from "../../context/CoinContext";
 import { Link } from "react-router-dom";
 
+export const rowContext = createContext();
 const NavBar = () => {
   const { setCurrency } = useContext(CoinContext);
-
-  const rowContext = createContext();
 
   const currencyHandler = (event) => {
     switch (event.target.value) {
