@@ -53,7 +53,8 @@ const Home = ({row}) => {
           <p className="market-cap">Market Cap</p>
         </div>
         {displayCoin.slice(0, 30).map((item, index) => (
-          <Link to={`/coin/${item.id}`} className="table-layout" key={index}>
+          // <Link to={`/coin/${item.id}`} className="table-layout" key={index}>
+          <div className="table-layout">
             <p>{item.market_cap_rank || "N/A"}</p>
             <div>
               <img src={item.image} alt="" />
@@ -71,7 +72,7 @@ const Home = ({row}) => {
             <p className="market-cap">
               {currency.symbol + item.market_cap.toLocaleString() || "N/A"}
             </p>
-          </Link>
+          </div>
         ))}
       </div>
     </div>

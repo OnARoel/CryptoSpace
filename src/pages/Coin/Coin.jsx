@@ -8,7 +8,7 @@ import DataChart from "../../components/Chart/DataChart";
 const Coin = () => {
   const { coinId } = useParams();
   const [coinData, setCoinData] = useState();
-  const [historicalData, setHistoricalData] = useState();
+  // const [historicalData, setHistoricalData] = useState();
   const { currency } = useContext(CoinContext);
 
   // Helper function for API calls
@@ -25,17 +25,17 @@ const Coin = () => {
     }
   };
 
-  const fetchHistoricalData = async () => {
-    try {
-      const data = await fetchFromApi(
-        `/coins/${coinId}/market_chart`,
-        `vs_currency=${currency.name}&days=10&interval=daily`
-      );
-      setHistoricalData(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const fetchHistoricalData = async () => {
+  //   try {
+  //     const data = await fetchFromApi(
+  //       `/coins/${coinId}/market_chart`,
+  //       `vs_currency=${currency.name}&days=10&interval=daily`
+  //     );
+  //     setHistoricalData(data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   const fetchCoinData = async () => {
     try {
@@ -48,10 +48,10 @@ const Coin = () => {
 
   useEffect(() => {
     fetchCoinData();
-    fetchHistoricalData();
+    // fetchHistoricalData();
   }, [currency, coinId]); // Added coinId to dependency array
 
-  if (coinData && historicalData) {
+  if (coinData) {
     return (
       <>
         <div className="coin">
