@@ -7,49 +7,31 @@ import DataChart from "../../components/Chart/DataChart";
 
 const Coin = () => {
   const { coinId } = useParams();
+
   const [coinData, setCoinData] = useState();
   const [historicalData, setHistoricalData] = useState();
   const { currency } = useContext(CoinContext);
 
-  // Helper function for API calls
-  const fetchFromApi = async (endpoint, params) => {
-    try {
-      const response = await fetch('/.netlify/functions/coinapi', {
-        method: 'POST',
-        body: JSON.stringify({ endpoint, params }),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      throw error;
-    }
-  };
-
   const fetchHistoricalData = async () => {
-    try {
-      const data = await fetchFromApi(
-        `/coins/${coinId}/market_chart`,
-        `vs_currency=${currency.name}&days=10&interval=daily`
-      );
-      setHistoricalData(data);
-    } catch (err) {
-      console.error(err);
-    }
+    fetch(
+      `http://localhost:5000/api/${coinId}?currency=${currency.name}&days=10`
+    )
+      .then((res) => res.json())
+      .then((res) => setHistoricalData(res.historicalData))
+      .catch((err) => console.error(err));
   };
 
   const fetchCoinData = async () => {
-    try {
-      const data = await fetchFromApi(`/coins/${coinId}`);
-      setCoinData(data);
-    } catch (err) {
-      console.error(err);
-    }
+    fetch(`http://localhost:5000/api/${coinId}?currency=${currency.name}`)
+      .then((res) => res.json())
+      .then((res) => setCoinData(res.coinData))
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     fetchCoinData();
     fetchHistoricalData();
-  }, [currency, coinId]); // Added coinId to dependency array
+  }, [currency]);
 
   if (coinData && historicalData) {
     return (
@@ -74,19 +56,26 @@ const Coin = () => {
             <li>Price</li>
             <li>
               {currency.symbol}
-              {coinData.market_data.current_price?.[currency.name.toLowerCase()]}
+              {
+                coinData.market_data.current_price?.[
+                  currency.name.toLowerCase()
+                ]
+              }
             </li>
           </ul>
         </div>
       </>
     );
+  } else {
+    return (
+      <>
+        <div className="spinner">
+          <div className="spin"></div>
+        </div>
+        ;
+      </>
+    );
   }
-
-  return (
-    <div className="spinner">
-      <div className="spin"></div>
-    </div>
-  );
 };
 
 export default Coin;

@@ -7,51 +7,50 @@ import DataChart from "../../components/Chart/DataChart";
 
 const Coin = () => {
   const { coinId } = useParams();
+
   const [coinData, setCoinData] = useState();
   const [historicalData, setHistoricalData] = useState();
   const { currency } = useContext(CoinContext);
 
-  // Helper function for API calls
-  const fetchFromApi = async (endpoint, params) => {
-    try {
-      const response = await fetch('/.netlify/functions/coinapi', {
-        method: 'POST',
-        body: JSON.stringify({ endpoint, params }),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      throw error;
-    }
-  };
-
   const fetchHistoricalData = async () => {
-    try {
-      const data = await fetchFromApi(
-        `/coins/${coinId}/market_chart`,
-        `vs_currency=${currency.name}&days=10&interval=daily`
-      );
-      setHistoricalData(data);
-    } catch (err) {
-      console.error(err);
-    }
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": "CG-bNTT9ZyTB7yiFxQwzC1yVQdU",
+      },
+    };
+
+    fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=10&interval-daily`,
+      options
+    )
+      .then((res) => res.json())
+      .then((res) => setHistoricalData(res))
+      .catch((err) => console.error(err));
   };
 
   const fetchCoinData = async () => {
-    try {
-      const data = await fetchFromApi(`/coins/${coinId}`);
-      setCoinData(data);
-    } catch (err) {
-      console.error(err);
-    }
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": "CG-bNTT9ZyTB7yiFxQwzC1yVQdU",
+      },
+    };
+
+    fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`, options)
+      .then((res) => res.json())
+      .then((res) => setCoinData(res))
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     fetchCoinData();
     fetchHistoricalData();
-  }, [currency, coinId]); // Added coinId to dependency array
+  }, [currency]);
 
-  if (coinData && historicalData) {
+  if ((coinData &&historicalData)) {
     return (
       <>
         <div className="coin">
@@ -72,21 +71,22 @@ const Coin = () => {
 
           <ul>
             <li>Price</li>
-            <li>
-              {currency.symbol}
-              {coinData.market_data.current_price?.[currency.name.toLowerCase()]}
-            </li>
+            <li>{currency.symbol}{coinData.market_data.current_price?.[currency.name.toLowerCase()]
+            }</li>
           </ul>
         </div>
       </>
     );
+  } else {
+    return (
+      <>
+        <div className="spinner">
+          <div className="spin"></div>
+        </div>
+        ;
+      </>
+    );
   }
-
-  return (
-    <div className="spinner">
-      <div className="spin"></div>
-    </div>
-  );
 };
 
 export default Coin;
