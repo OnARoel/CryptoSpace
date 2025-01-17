@@ -1,28 +1,34 @@
-import React, { createContext, useContext } from "react";
+// src/components/NavBar/NavBar.jsx
+import React, { useContext } from "react";
 import "./NavBar.css";
 import logo from "../../assets/crypto-logo.svg";
 import icon from "../../assets/arrow.svg";
 import { CoinContext } from "../../context/CoinContext";
+import { RowContext } from "../../context/RowContext";  // Import the context
 import { Link } from "react-router-dom";
 
-export const rowContext = createContext();
 const NavBar = () => {
   const { setCurrency } = useContext(CoinContext);
+  const { selectedRows, setSelectedRows } = useContext(RowContext);  // Use the context
 
   const currencyHandler = (event) => {
     switch (event.target.value) {
       case "USD":
         setCurrency({ name: "USD", symbol: "$" });
-        break; // Add break to prevent fall-through
+        break;
       case "CAD":
         setCurrency({ name: "CAD", symbol: "$" });
-        break; // Add break to prevent fall-through
+        break;
       case "EUR":
         setCurrency({ name: "EUR", symbol: "€" });
-        break; // Add break to prevent fall-through
+        break;
       default:
         setCurrency({ name: "USD", symbol: "$" });
     }
+  };
+
+  const handleRowsChange = (event) => {
+    setSelectedRows(Number(event.target.value));
   };
 
   return (
@@ -31,9 +37,7 @@ const NavBar = () => {
         <img src={logo} className="logo" alt="logo" />
       </Link>
       <ul>
-        <Link to={"/"}>
-          <li>Home</li>
-        </Link>
+        <Link to={"/"}><li>Home</li></Link>
         <li>Features</li>
         <li>Pricing</li>
         <li>Blog</li>
@@ -45,12 +49,12 @@ const NavBar = () => {
           <option value="EUR">EUR</option>
         </select>
         <button>
-          Sign Up <img src={icon}></img>
+          Sign Up <img src={icon} alt="sign up"></img>
         </button>
-        <select>
+        <select value={selectedRows} onChange={handleRowsChange}>
+          <option value="20">20</option>
           <option value="50">50</option>
-          <option value="100">100</option>
-          <option value="200">200</option>
+          <option value="80">80</option>
         </select>
         <span>Rows</span>
       </div>

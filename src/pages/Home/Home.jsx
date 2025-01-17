@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Home.css";
 import { CoinContext } from "../../context/CoinContext";
 import { Link } from "react-router-dom";
+import { RowContext } from "../../context/RowContext";
 
 const Home = ({row}) => {
   const { allCoin, currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState(allCoin); // Initialize with all coins
   const [input, setInput] = useState("");
+  const {selectedRows} = useContext(RowContext);
 
   const inputHandler = (e) => {
     const query = e.target.value;
@@ -52,7 +54,7 @@ const Home = ({row}) => {
           <p style={{ textAlign: "center" }}>24H Change</p>
           <p className="market-cap">Market Cap</p>
         </div>
-        {displayCoin.slice(0, 30).map((item, index) => (
+        {displayCoin.slice(0, selectedRows).map((item, index) => (
           // <Link to={`/coin/${item.id}`} className="table-layout" key={index}>
           <div className="table-layout">
             <p>{item.market_cap_rank || "N/A"}</p>
