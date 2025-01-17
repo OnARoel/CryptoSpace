@@ -72,10 +72,10 @@ const Coin = () => {
 
           <ul>
             <li>Price</li>
-            <li>
+            {/* <li>
               {currency.symbol}
               {coinData.market_data.current_price?.[currency.name.toLowerCase()]}
-            </li>
+            </li> */}
           </ul>
         </div>
       </>

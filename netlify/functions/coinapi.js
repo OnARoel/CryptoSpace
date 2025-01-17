@@ -1,7 +1,7 @@
 // netlify/functions/coinapi.js
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-exports.handler = async (event) => {
+export async function handler(event) {
   try {
     // Get the endpoint and parameters from the request
     const { endpoint, params } = JSON.parse(event.body);
@@ -34,4 +34,4 @@ exports.handler = async (event) => {
       body: JSON.stringify({ error: 'Failed fetching data' }),
     };
   }
-};
+}
